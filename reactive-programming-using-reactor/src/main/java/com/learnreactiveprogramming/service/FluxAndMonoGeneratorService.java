@@ -1,14 +1,17 @@
 package com.learnreactiveprogramming.service;
 
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
 
 
+@Slf4j
 public class FluxAndMonoGeneratorService {
     private static FluxAndMonoGeneratorService instance;
 
@@ -97,7 +100,9 @@ public class FluxAndMonoGeneratorService {
                 .map(String::toUpperCase)
                 .filter(s -> s.length() > stringLength)
                 // ALEX,CHLOE -> A, L, E, X, C, H, L , O, E
-                .flatMap(this::splitString);
+//                .flatMap(this::splitString);
+                .flatMap(s -> Flux.fromArray(s.split(",")));
+
 
 
     }

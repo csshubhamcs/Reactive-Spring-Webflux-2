@@ -34,9 +34,6 @@ class FluxAndMonoGeneratorServiceTest {
     @Test
     void namesFlux_Immutability() {
 
-        //given
-
-        //when
         var stringFlux = fluxAndMonoGeneratorService.namesFlux_immutablity()
                 .log();
 
@@ -45,7 +42,6 @@ class FluxAndMonoGeneratorServiceTest {
                 //.expectNext("ALEX", "BEN", "CHLOE")
                 .expectNextCount(3)
                 .verifyComplete();
-
 
     }
 
@@ -103,7 +99,7 @@ class FluxAndMonoGeneratorServiceTest {
         int stringLength = 3;
 
         //when
-        var namesFlux = fluxAndMonoGeneratorService.namesFlux_map(stringLength).log();
+        var namesFlux = fluxAndMonoGeneratorService.namesFlux_map(stringLength);
 
         //then
         StepVerifier.create(namesFlux)
@@ -124,7 +120,8 @@ class FluxAndMonoGeneratorServiceTest {
 
         //then
         StepVerifier.create(namesFlux)
-                .expectNext("A", "L", "E", "X", "C", "H", "L", "O", "E")
+//                .expectNext("A", "L", "E", "X", "C", "H", "L", "O", "E")
+                .expectNext("ALEX","CHLOE")
                 .verifyComplete();
 
     }

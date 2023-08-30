@@ -10,6 +10,24 @@ import java.util.function.Function;
 
 
 public class FluxAndMonoGeneratorService {
+    private static FluxAndMonoGeneratorService instance;
+
+    private FluxAndMonoGeneratorService() {
+
+    }
+
+    public static FluxAndMonoGeneratorService getInstance(){
+        if (instance == null){
+            synchronized (FluxAndMonoGeneratorService.class){
+                if (instance == null){
+                    instance = new FluxAndMonoGeneratorService();
+                }
+            }
+        }
+        return instance;
+    }
+
+
 
     public Flux<String> namesFlux() {
         var namesList = List.of("alex", "ben", "chloe");

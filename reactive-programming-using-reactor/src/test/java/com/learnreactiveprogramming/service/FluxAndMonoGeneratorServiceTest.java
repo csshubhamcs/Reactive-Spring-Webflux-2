@@ -9,7 +9,9 @@ import java.util.List;
 
 class FluxAndMonoGeneratorServiceTest {
 
-    FluxAndMonoGeneratorService fluxAndMonoGeneratorService = new FluxAndMonoGeneratorService();
+//    FluxAndMonoGeneratorService fluxAndMonoGeneratorService = new FluxAndMonoGeneratorService();
+
+    FluxAndMonoGeneratorService fluxAndMonoGeneratorService = FluxAndMonoGeneratorService.getInstance();
 
     @Test
     void namesFlux() {

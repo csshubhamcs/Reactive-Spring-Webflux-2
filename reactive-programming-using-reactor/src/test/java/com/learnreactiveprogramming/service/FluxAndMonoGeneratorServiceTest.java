@@ -1,5 +1,6 @@
 package com.learnreactiveprogramming.service;
 
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import reactor.test.StepVerifier;
 import reactor.test.scheduler.VirtualTimeScheduler;
@@ -39,8 +40,9 @@ class FluxAndMonoGeneratorServiceTest {
 
         //then
         StepVerifier.create(stringFlux)
-                //.expectNext("ALEX", "BEN", "CHLOE")
-                .expectNextCount(3)
+//                .expectNext("ALEX", "BEN", "CHLOE")
+                .expectNext("alex","ben", "chloe")
+//                .expectNextCount(3)
                 .verifyComplete();
 
     }

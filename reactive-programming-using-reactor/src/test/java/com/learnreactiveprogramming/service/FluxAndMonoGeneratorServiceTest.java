@@ -1,6 +1,5 @@
 package com.learnreactiveprogramming.service;
 
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import reactor.test.StepVerifier;
 import reactor.test.scheduler.VirtualTimeScheduler;
@@ -10,9 +9,21 @@ import java.util.List;
 
 class FluxAndMonoGeneratorServiceTest {
 
-//    FluxAndMonoGeneratorService fluxAndMonoGeneratorService = new FluxAndMonoGeneratorService();
-
     FluxAndMonoGeneratorService fluxAndMonoGeneratorService = FluxAndMonoGeneratorService.getInstance();
+
+    @Test
+    void testNamesFluxReturnsExpectedValues() {
+        // Arrange
+        // No arrangement needed as we are not setting up any specific state
+
+        // Act
+        var namesFlux = fluxAndMonoGeneratorService.namesFlux();
+
+        // Assert
+        StepVerifier.create(namesFlux)
+                .expectNext("alex", "ben", "chloe")
+                .verifyComplete();
+    }
 
     @Test
     void namesFlux() {
@@ -41,7 +52,7 @@ class FluxAndMonoGeneratorServiceTest {
         //then
         StepVerifier.create(stringFlux)
 //                .expectNext("ALEX", "BEN", "CHLOE")
-                .expectNext("alex","ben", "chloe")
+                .expectNext("alex", "ben", "chloe")
 //                .expectNextCount(3)
                 .verifyComplete();
 
@@ -93,7 +104,6 @@ class FluxAndMonoGeneratorServiceTest {
 
     }
 
-
     @Test
     void namesFlux_map() {
 
@@ -123,7 +133,7 @@ class FluxAndMonoGeneratorServiceTest {
         //then
         StepVerifier.create(namesFlux)
 //                .expectNext("A", "L", "E", "X", "C", "H", "L", "O", "E")
-                .expectNext("ALEX","CHLOE")
+                .expectNext("ALEX", "CHLOE")
                 .verifyComplete();
 
     }
@@ -174,9 +184,9 @@ class FluxAndMonoGeneratorServiceTest {
         var namesFlux = fluxAndMonoGeneratorService.namesFlux_concatmap(stringLength);
 
         //then
-        StepVerifier.withVirtualTime(()-> namesFlux)
+        StepVerifier.withVirtualTime(() -> namesFlux)
                 .thenAwait(Duration.ofSeconds(10))
-                .expectNext("A","L","E","X","C","H","L","O","E")
+                .expectNext("A", "L", "E", "X", "C", "H", "L", "O", "E")
                 //.expectNextCount(9)
                 .verifyComplete();
     }
@@ -212,7 +222,6 @@ class FluxAndMonoGeneratorServiceTest {
                 .verifyComplete();
 
     }
-
 
     @Test
     void namesFlux_transform() {
@@ -326,7 +335,6 @@ class FluxAndMonoGeneratorServiceTest {
                 .verifyComplete();
 
     }
-
 
     @Test
     void explore_concatWith() {
@@ -451,7 +459,6 @@ class FluxAndMonoGeneratorServiceTest {
 
     }
 
-
     @Test
     void explore_zip_2() {
 
@@ -496,5 +503,4 @@ class FluxAndMonoGeneratorServiceTest {
                 .verifyComplete();
 
     }
-
 }

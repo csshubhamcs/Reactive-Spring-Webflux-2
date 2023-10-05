@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import reactor.test.StepVerifier;
 
 //@SpringBootTest(classes = FluxAndMonoController.class)
 @WebFluxTest(controllers = FluxAndMonoController.class)
@@ -32,6 +33,22 @@ public class FluxAndMonoControllerTest1 {
                 .contains(1, 2, 3);
     }
 
+    @Test
+    public void test_Flux_Approach2(){
+
+        var flux = webTestClient.get()
+                .uri("/flux")
+                .exchange()
+                .expectStatus()
+                .isOk()
+                .returnResult(Integer.class)
+                .getResponseBody();
+
+        StepVerifier.create(flux)
+                .expectNext(1,2,3)
+                .verifyComplete();
+    }
+
 
     @Test
     public void testHelloMonoWhenCalledThenReturnHello() {
@@ -45,7 +62,7 @@ public class FluxAndMonoControllerTest1 {
 
     @Test
     public void testStreamWhenCalledThenReturnStream() {
-        webTestClient.get().uri("/stream")
+      var stream =  webTestClient.get().uri("/stream")
                 .accept(MediaType.TEXT_EVENT_STREAM)
                 .exchange()
                 .expectStatus().isOk()
@@ -53,5 +70,10 @@ public class FluxAndMonoControllerTest1 {
                 .getResponseBody()
                 .take(10)
                 .log();
+
+      StepVerifier.create(stream)
+              .expectNext(0L,1L,2L,3L)
+              .thenCancel()
+              .verify();
     }
 }
